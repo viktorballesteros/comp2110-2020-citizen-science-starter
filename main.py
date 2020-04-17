@@ -12,14 +12,6 @@ def index():
 
     return static_file("index.html", root=os.path.join(os.path.dirname(__file__), "views"))
 
-@app.get('/api', name='api')
-def api_main():
-
-    return {
-        'observations': url(app.get_url('observations')),
-        'users': url(app.get_url('users'))
-    }
-
 @app.get('/api/observations', name='observations')
 def list_observations(model):
     """Return a JSON list of observations"""
