@@ -1,0 +1,23 @@
+/* sample spreadshet - you should replace all of this! */
+body {
+    margin: 100px;
+}
+
+header {
+    width: 100%;
+    background-color: coral;
+}
+
+#heading {
+    background-color: gainsboro;
+}
+
+#whatis {
+    width: 300px;
+    background-color: forestgreen;
+    border: 10px solid orchid;
+}
+
+footer {
+    background-color: yellow;
+}
