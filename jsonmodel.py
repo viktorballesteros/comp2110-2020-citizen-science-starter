@@ -4,10 +4,7 @@ import inspect
 import datetime
 
 class JSONModelPlugin:
-    """A Bottle plugin to add an instance of a Model 
-    as an argument to every view function if the 
-    function takes a named `model` argument. 
-    """
+
     name = "jsonmodel"
     api = 2
 
@@ -19,7 +16,7 @@ class JSONModelPlugin:
 
          for other in app.plugins:
             if not isinstance(other, JSONModelPlugin): continue
-            if other.keyword == 'model':
+            if other.keyword == self.keyword:
                 raise PluginError("Found another JSONmodel plugin with "\
                 "conflicting settings (non-unique keyword).")
 
@@ -42,19 +39,23 @@ class JSONModelPlugin:
         return wrapper
 
 
+
+
 class Model:
-    """A model class backed by an in-memory array
-    of data read from a JSON file.  Additions to the
-    data are stored for the duration of the execution 
-    only"""
 
     def __init__(self, jsonfile): 
         """Load data from a JSON file to initialise the 
         data store"""
 
-        with open(jsonfile) as fd:
+        self.jsonfile = jsonfile
+        self.reset()
+
+    def reset(self):
+        """reload the data from the JSON file"""
+
+        with open(self.jsonfile) as fd:
             self.data = json.load(fd)
-            print("loaded data from ", jsonfile)
+            print("loaded data from ", self.jsonfile)
 
     def get_observations(self):
         return self.data['observations']
@@ -97,6 +98,7 @@ class Model:
     def get_user(self, uid):
         """Return a single user record from the data store
         given the id or None if no user with this id exists"""
+
 
         for user in self.data['users']:
             if str(user['id']) == str(uid):

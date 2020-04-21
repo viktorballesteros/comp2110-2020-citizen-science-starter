@@ -6,11 +6,32 @@ from jsonmodel import JSONModelPlugin
 
 app = Bottle()
 
+def url(path):
+
+    return 'http://' + request.urlparts[1] + path
+
 @app.route('/')
 def index():
     """Deliver the index page as a static file"""
 
     return static_file("index.html", root=os.path.join(os.path.dirname(__file__), "views"))
+
+@app.get('/api/reset', name='reset')
+def api_reset(model):
+    """If requested, reset the database 
+    to ensure that tests are consistent"""
+
+    model.reset()
+
+    return {'status': 'reset'}
+
+@app.get('/api', name='api')
+def api_main():
+
+    return {
+        'observations': url(app.get_url('observations')),
+        'users': url(app.get_url('users'))
+    }
 
 @app.get('/api/observations', name='observations')
 def list_observations(model):

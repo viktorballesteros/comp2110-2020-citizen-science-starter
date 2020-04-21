@@ -56,7 +56,7 @@ describe("Site Pages", function() {
             cy.visit('http://localhost:8010/#!/observations');
             cy.fixture('trees.json').then((json) => {
 
-                for(let i=0; i<json.observations; i++) {
+                for(let i=0; i<json.observations.length; i++) {
                     let observation = json.observations[i];
                     cy.get("a[href='/#!/observations"+observation.id+"']")
                     .should("contain", observation.location)
