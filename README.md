@@ -29,5 +29,16 @@ I have provided a few Javascript files in the project:
 * `views.js` is empty for you to add your view functions to
 
 The `cypress` directory contains tests to be run with the [Cypress](https://cypress.io) testing tool.
-More details to follow...
+
+
+## The API Server
+
+The Python API server provides the following URLs serving JSON data:
+
+* `/api/users` - GET returns a JSON array of user details
+* `/api/users/<id>` - GET returns details of an individual user
+* `/api/observations` - GET returns a JSON array of observation records
+* `/api/observations` - POST adds a new observation record (required fields below)
+* `/api/observations/<id>` - GET returns details of an individual observation
+* `/api/reset` - GET request resets the database (for testing purposes)
 
