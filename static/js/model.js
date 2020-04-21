@@ -43,7 +43,11 @@ const Model = {
 
     // get_observation - return a single observation given its id
     get_observation: function(observationid) {
-
+        return this.data.observations;
+    },
+ 
+    set_observations: function(observations) {
+        this.data.observations = observations;
     },
 
     // add_observation - add a new observation by submitting a request
@@ -61,12 +65,23 @@ const Model = {
 
     },
 
+    // get_recent_observations - return the N most recent
+    //  observations, ordered by timestamp, most recent first
+    get_recent_observations: function(N) {
+
+    },
+
     /* 
     * Users
     */
     // get_users - return the array of users
     get_users: function() {
+        return this.data.users;
+    },
 
+    // set_users - set the array of users
+    set_users: function(users) {
+        this.data.users = users;
     },
 
     // get_user - return the details of a single user given 
