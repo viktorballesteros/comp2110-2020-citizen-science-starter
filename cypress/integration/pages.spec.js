@@ -58,7 +58,7 @@ describe("Site Pages", function() {
 
                 for(let i=0; i<json.observations.length; i++) {
                     let observation = json.observations[i];
-                    cy.get("a[href='/#!/observations"+observation.id+"']")
+                    cy.get("a[href='/#!/observations/"+observation.id+"']")
                     .should("contain", observation.location)
                     .should("contain", observation.weather);                    
                 }
