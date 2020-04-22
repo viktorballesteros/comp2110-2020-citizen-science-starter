@@ -57,7 +57,7 @@ def create_observation(model):
 
 
     fields = ['participant', 'temperature', 'weather', 'wind',  
-                'height', 'girth', 
+                'height', 'girth', 'location',
                 'leaf_size', 'leaf_shape', 'bark_colour', 'bark_texture']
 
     data = {}
