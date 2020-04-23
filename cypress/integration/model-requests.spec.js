@@ -28,10 +28,10 @@ describe('Model API Requests', function(){
                 // check some properties
                 assert.property(observations[0], "timestamp");
                 assert.property(observations[0], "height");
-                window.removeEventListener("modelChanged", handler);
+                window.removeEventListener("modelUpdated", handler);
                 done();
             }
-            window.addEventListener('modelChanged', handler);
+            window.addEventListener('modelUpdated', handler);
 
             Model.update_observations();
 
@@ -39,7 +39,7 @@ describe('Model API Requests', function(){
     });
 
     describe("#update_users", function(){
-        it("should eventually trigger a modelChanged event with updated users", function(done){
+        it("should eventually trigger a modelUpdated event with updated users", function(done){
             function handler(e) {
                 let model = e.detail;
                 // event detail should be the model
@@ -49,10 +49,10 @@ describe('Model API Requests', function(){
                 assert.isArray(users);
                 assert.property(users[0], "first_name");
                 assert.property(users[0], "last_name");
-                window.removeEventListener("modelChanged", handler);
+                window.removeEventListener("modelUpdated", handler);
                 done();
             }
-            window.addEventListener('modelChanged', handler);
+            window.addEventListener('modelUpdated', handler);
 
             Model.update_users();
         });
@@ -84,10 +84,10 @@ describe('Model API Requests', function(){
                 const newobs = e.detail.observation;
                 expect(newobs.participant).to.eq(obs.participant);
                 expect(newobs.id).to.be.above(1);
-                window.removeEventListener("observationResponse", handler);
+                window.removeEventListener("observationAdded", handler);
                 done();
             }
-            window.addEventListener("observationResponse", handler);
+            window.addEventListener("observationAdded", handler);
 
             Model.add_observation(formData);
         });
@@ -113,10 +113,10 @@ describe('Model API Requests', function(){
                 expect(e.detail.status).to.eq("failed");
                 const errors = e.detail.errors;
                 expect(errors.length).to.eq(2);
-                window.removeEventListener("observationResponse", handler);
+                window.removeEventListener("observationAdded", handler);
                 done();
             }
-            window.addEventListener("observationResponse", handler);
+            window.addEventListener("observationAdded", handler);
 
             Model.add_observation(formData);
         });
