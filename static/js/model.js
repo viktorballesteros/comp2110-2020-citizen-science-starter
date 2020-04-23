@@ -38,12 +38,12 @@ const Model = {
 
     // get_observations - return an array of observation objects
     get_observations: function() {
-        
+        return this.data.observations;
     },
 
     // get_observation - return a single observation given its id
     get_observation: function(observationid) {
-        return this.data.observations;
+        
     },
  
     set_observations: function(observations) {
