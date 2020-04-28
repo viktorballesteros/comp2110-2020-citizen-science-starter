@@ -52,10 +52,10 @@ const Model = {
 
     // add_observation - add a new observation by submitting a request
     //   to the server API
-    //   data contains all fields in the observation object
+    //   formdata is a FormData object containing all fields in the observation object
     // when the request is resolved, creates an "observationAdded" event
     //  with the response from the server as the detail
-    add_observation: function(data) {
+    add_observation: function(formdata) {
 
     },
 
