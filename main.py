@@ -102,7 +102,7 @@ if __name__ == '__main__':
     if not mimetypes.types_map.get('.jsx'):
         mimetypes.add_type("application/javascript", ".js")
 
-    app.install(JSONModelPlugin("../trees.json"))
+    app.install(JSONModelPlugin("trees.json"))
 
     run(app=app, debug=True, reloader=True, port=8010)
 
