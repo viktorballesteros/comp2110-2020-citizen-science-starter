@@ -16,6 +16,7 @@ describe("Site Pages", function() {
         
         it("has links to views for observations and users", function() {
             cy.visit('http://localhost:8010/');
+            cy.wait(100);
             cy.get("a[href='#!/users']");
             cy.get("a[href='#!/observations']");
             cy.get("a[href='#!/submit']");
@@ -23,26 +24,25 @@ describe("Site Pages", function() {
 
         it("contains a list of recent observations", function() {
             cy.visit('http://localhost:8010/');
+            cy.wait(100);
             cy.contains("Recent Observations");
             // contains links to the most recent observations, check for a few
-            cy.get("a[href='/#!/observations/17']")
-            cy.get("a[href='/#!/observations/2']")
+            cy.get("a[href='/#!/observations/166']")
+            cy.get("a[href='/#!/observations/121']")
             cy.get("a[href='/#!/observations/1']")
-            cy.get("a[href='/#!/observations/10']")
+            cy.get("a[href='/#!/observations/177']")
+            cy.get("a[href='/#!/observations/76']")
         })
 
-        it("contains a list of users", function() {
+        it("contains a list of the top 10 users", function() {
             cy.visit('http://localhost:8010/');
-            cy.contains("Users");
-            cy.fixture('trees.json').then((json) => {
+            cy.wait(100);
 
-                for(let i=0; i<json.users.length; i++) {
-                    let user = json.users[i];
-                    cy.contains(user.first_name);
-                    cy.contains(user.last_name);
-                    cy.get("a[href='/#!/users/"+user.id+"']");
-                }
-            });
+            let topusers = [84, 43, 46, 21, 45, 49, 4, 52, 87, 18];
+
+            for( let i=0; i<topusers.length; i++) {
+                cy.get("a[href='/#!/users/"+topusers[i]+"']");
+            }
         });
     });
 
@@ -54,6 +54,7 @@ describe("Site Pages", function() {
 
         it("contains a list of observations", function() {
             cy.visit('http://localhost:8010/#!/observations');
+            cy.wait(100);
             cy.fixture('trees.json').then((json) => {
 
                 for(let i=0; i<json.observations.length; i++) {
@@ -70,11 +71,13 @@ describe("Site Pages", function() {
 
         it("successfully loads", function() {
             cy.visit('http://localhost:8010/#!/users');
-        })
+        });
 
         it("contains a list of users", function() {
             cy.visit('http://localhost:8010/#!/users');
+            cy.wait(100);
             cy.fixture('trees.json').then((json) => {
+                
                 for(let i=0; i<json.users.length; i++) {
                     let user = json.users[i];
                     cy.get("a[href='/#!/users/"+user.id+"']")
@@ -82,7 +85,7 @@ describe("Site Pages", function() {
                     .should("contain", user.last_name);                    
                 }
             });
-        })
+        });
     });
 
     describe("Individual User Page", function() {
@@ -94,10 +97,12 @@ describe("Site Pages", function() {
         it("contains user details", function() {
 
             cy.fixture('trees.json').then((json) => {
-                for(let i=0; i<json.users.length; i++) {
+                // just check 10 user pages
+                for(let i=0; i<10; i++) {
                     let user = json.users[i];
 
                     cy.visit('http://localhost:8010/#!/users/'+user.id);
+                    cy.wait(100);
                     cy.contains(user.first_name);
                     cy.contains(user.last_name);
                 }
@@ -106,11 +111,23 @@ describe("Site Pages", function() {
 
         it("contains a list of user observations", function(){
 
-            let hazels = [17, 10, 28, 12, 7, 19, 11, 21];
-            cy.visit('http://localhost:8010/#!/users/1');
-            for(let i=0; i<hazels.length; i++) {
-                cy.get("a[href='/#!/observations/"+hazels[i]+"']");
-            }
+
+            cy.fixture('trees.json').then((json) => {
+
+                let userid = 89;
+                let expected = [];
+                for (let j=0; j<json.observations.length; j++) {
+                    if (json.observations[j].participant === userid) {
+                        expected.push(json.observations[j]);
+                    }
+                } 
+
+                cy.visit('http://localhost:8010/#!/users/' + userid);
+                cy.wait(100);
+                for(let i=0; i<expected.length; i++) {
+                    cy.get("a[href='/#!/observations/"+expected[i].id+"']");
+                }
+            });
         });
     });
 });

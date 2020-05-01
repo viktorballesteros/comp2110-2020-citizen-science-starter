@@ -39,8 +39,6 @@ class JSONModelPlugin:
         return wrapper
 
 
-
-
 class Model:
 
     def __init__(self, jsonfile): 

@@ -14,7 +14,6 @@ describe('Model', function(){
     describe("#get_observations", function(){
         it("get_observations method returns the list of observations", function(){
             let observations = Model.get_observations();
-            console.log(observations);
             assert.isArray(observations);
             // check some properties
             assert.property(observations[0], "timestamp");
@@ -34,8 +33,7 @@ describe('Model', function(){
             assert.isArray(users);
             assert.property(users[0], "first_name");
             assert.property(users[0], "last_name");
-            expect(users[0].first_name).to.equal("Bob");
-            expect(users[0].last_name).to.equal("Bobalooba");
+            // order of users is not defined so we can't check who's on first
         });
     });
 
@@ -57,14 +55,24 @@ describe('Model', function(){
     describe("#get_user_observations", function(){
         it("should return just the observations for one user", function(){
             // expected number of observations per user
-            const expected_count = [0,8,6,3,2,1,2,5,2,1];
-            for (let userid=0; userid<10; userid++) {
-                let obs = Model.get_user_observations(userid);
-                expect(obs.length).to.equal(expected_count[userid]);
-                for (let i=0; i<obs.length; i++) {
-                    expect(obs[i].participant).to.equal(userid);
+
+            cy.fixture('trees.json').then((json) => {
+
+                for (let userid=0; userid<10; userid++) { 
+                    let expected_count = 0;
+                    for (let j=0; j<json.observations.length; j++) {
+                        if (json.observations[j].participant === userid) {
+                            expected_count = expected_count + 1;
+                        }
+                    } 
+
+                    let obs = Model.get_user_observations(userid);
+                    expect(obs.length).to.equal(expected_count);
+                    for (let i=0; i<obs.length; i++) {
+                        expect(obs[i].participant).to.equal(userid);
+                    }
                 }
-            }
+            });
         });
 
         it("should return just the observations ordered by timestamp", function(){
