@@ -43,6 +43,7 @@ const Model = {
 
     // get_observation - return a single observation given its id
     get_observation: function(observationid) {
+        return observationid;
         
     },
  
@@ -62,7 +63,7 @@ const Model = {
     // get_user_observations - return just the observations for
     //   one user as an array
     get_user_observations: function(userid) {
-
+        return userid;
     },
 
     // get_recent_observations - return the N most recent
@@ -87,7 +88,7 @@ const Model = {
     // get_user - return the details of a single user given 
     //    the user id
     get_user: function(userid) {
-
+        return userid;
     }
 
 };
