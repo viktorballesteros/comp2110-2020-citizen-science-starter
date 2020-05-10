@@ -182,11 +182,11 @@ const Model = {
 
     // get_user - return the details of a single user given 
     //    the user id
-    get_user: function(id) {
+    get_user: function(userid) {
         let userTarget = this.get_users();
 
         for(let i = 0; i < userTarget.length; i++) {
-            if(userTarget[i].id == id) {
+            if(userTarget[i].id == userid) {
                 return userTarget[i];
             }
         }
